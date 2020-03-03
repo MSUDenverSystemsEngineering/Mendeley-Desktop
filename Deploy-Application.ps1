@@ -139,8 +139,9 @@ Try {
 		}
 
 		## <Perform Installation tasks here>
-		$exitCode = Execute-Process -Path "$dirFiles\Mendeley-Desktop-1.19.4-win32.exe" -Parameters '/S' -WindowStyle 'Hidden'
-		If (($exitCode.ExitCode -ne "0") -and ($exitCode.ExitCode -ne "1223") -and ($mainExitCode -ne "3010")) { $mainExitCode = $exitCode.ExitCode }
+		$exitCode = Execute-Process -Path "$dirFiles\Mendeley-Desktop-1.19.4-win32.exe" -Parameters '/S' -WindowStyle 'Hidden' -IgnoreExitCodes '1223' -PassThru
+		If ($exitCode.ExitCode -ne "1223") {$exitCode.ExitCode = "0"}
+		If (($exitCode.ExitCode -ne "0") -and ($mainExitCode -ne "3010")) { $mainExitCode = $exitCode.ExitCode }
 
 
 		##*===============================================
