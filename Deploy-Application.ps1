@@ -127,12 +127,12 @@ Try {
 		Show-InstallationProgress
 
 		## <Perform Pre-Installation tasks here>
-		If (Test-Path "$envLocalAppData\Programs\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe") {
-			$exitCode = Execute-Process -Path "$envLocalAppData\Programs\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe" -Parameters '/S' -WindowStyle 'Hidden'
+		If (Test-Path "$envProgramFiles\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe") {
+			$exitCode = Execute-Process -Path "$envProgramFiles\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe" -Parameters '/S' -WindowStyle 'Hidden'
 			If (($exitCode.ExitCode -ne "0") -and ($mainExitCode -ne "3010")) { $mainExitCode = $exitCode.ExitCode }
 			$uninstallerExists = $true
 			While($uninstallerExists){
-				If (Test-Path "$envLocalAppData\Programs\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe") {
+				If (Test-Path "$envProgramFiles\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe") {
 					Write-Log -Message "Waiting for uninstaller to finish..." -Source 'Pre-Installation' -LogType 'CMTrace'
 					Start-Sleep -s 5
 				}
@@ -156,7 +156,7 @@ Try {
 		}
 
 		## <Perform Installation tasks here>
-		$exitCode = Execute-Process -Path "$dirFiles\mendeley-reference-manager-2.88.0.exe" -Parameters '/S' -WindowStyle 'Hidden' -IgnoreExitCodes '1223' -PassThru
+		$exitCode = Execute-Process -Path "$dirFiles\mendeley-reference-manager-2.88.0.exe" -Parameters '/AllUSERS=1 /S' -WindowStyle 'Hidden' -IgnoreExitCodes '1223' -PassThru
 		If ($exitCode.ExitCode -eq "1223") {$exitCode.ExitCode = "0"}
 		If (($exitCode.ExitCode -ne "0") -and ($mainExitCode -ne "3010")) { $mainExitCode = $exitCode.ExitCode }
 
@@ -206,7 +206,7 @@ Try {
 		}
 
 		# <Perform Uninstallation tasks here>
-		$exitCode = Execute-Process -Path "$envLocalAppData\Programs\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe" -Parameters '/S' -WindowStyle 'Hidden'
+		$exitCode = Execute-Process -Path "$envProgramFiles\Mendeley Reference Manager\Uninstall Mendeley Reference Manager.exe" -Parameters '/S' -WindowStyle 'Hidden'
 		If (($exitCode.ExitCode -ne "0") -and ($mainExitCode -ne "3010")) { $mainExitCode = $exitCode.ExitCode }
 
 		##*===============================================
@@ -268,8 +268,8 @@ Catch {
 # SIG # Begin signature block
 # MIImVgYJKoZIhvcNAQcCoIImRzCCJkMCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCBvUrNaRkRL1G98
-# xiZzk9MZr5GJk9UyKRcM5vh3psOEuaCCH8EwggVvMIIEV6ADAgECAhBI/JO0YFWU
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDkqey9Et+FjkMK
+# Eu8MCSlpf+CtGNzPu22vwOtRBHpMpaCCH8EwggVvMIIEV6ADAgECAhBI/JO0YFWU
 # jTanyYqJ1pQWMA0GCSqGSIb3DQEBDAUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQI
 # DBJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoM
 # EUNvbW9kbyBDQSBMaW1pdGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2Vy
@@ -443,32 +443,32 @@ Catch {
 # ZDErMCkGA1UEAxMiU2VjdGlnbyBQdWJsaWMgQ29kZSBTaWduaW5nIENBIFIzNgIR
 # AKVN33D73PFMVIK48rFyyjEwDQYJYIZIAWUDBAIBBQCggYQwGAYKKwYBBAGCNwIB
 # DDEKMAigAoAAoQKAADAZBgkqhkiG9w0BCQMxDAYKKwYBBAGCNwIBBDAcBgorBgEE
-# AYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQgol7+cBbDQ2Rq
-# FKeDHsRcGHWd7zxK2w0nJsd8ixxFuEQwDQYJKoZIhvcNAQEBBQAEggGASCj9QzVP
-# 9zk/BjfY4CKrIDiyEDb1c2BHBUss1V+ZVv7GZYPuBBYNkGdN6IJfzttTUxzQH4OR
-# kkEUi9YmhulRWaDNDztcesXlJfOGaWN5LQDlCptwUA57+bPjymsR70EosFxWQBZL
-# kzvm5ZDnM0hvpkqlOPFMixeOTvp0HO5nLPVmIoWfU0c37BAfdw9UE8QzFUnPB517
-# 9Lh2fmjsVo068zX7bqfcVSnRdF8KGaMESF5AebO8Nm5W28qjTxhk5RXhmxDnazTc
-# IQZFDOABrVB8XpAO5oL5K6qQ77coyZ2ypGskO8y62WOhASwgOeJJ/ZemH7nFXqid
-# YgTw6q1Pr2vqGUDAR5ZNHd4WpvaHbkealpOSt3V7vuZFX78VmUa/A7oCD+VhkHm1
-# i+I64vmT0ke9sw9wUlnDTugZASLAWyF9lL6XtiWtzHcHq4OxljHH21Eg3gXcuM/S
-# wAT4DG0I15LFp+MajbSRP4X2i1x/Ju1TsJnQPh6ewpGJ9IUj5jfavld5oYIDTDCC
+# AYI3AgELMQ4wDAYKKwYBBAGCNwIBFTAvBgkqhkiG9w0BCQQxIgQgNNnziOCEaFkW
+# hc+H9MnCw2LfjpSUd6AgaA2Ls+7BUmkwDQYJKoZIhvcNAQEBBQAEggGAEibJ9l6Y
+# XQBKbGmUSYILs+KD8MGuT4eMRVKWn4JacSNThYpp/W/lGnZU5zlXteA/QKiVgOVq
+# iNHtktLbRfO8pCtTIWFDyckt7BTB7pal2dLWEuCzOSIR/5xjc+G052TiC7Fb75Fp
+# 6E506v2ATFulBzXwUaWV9gei3baZmJulPJ23Ebsmdb5nbl9/UhHod4aciadf8i2g
+# Czlmdu8bch7+pZYbpZOTsVa4siB5amf547yXO4Lz1k5VYTXzBJvNlDb4+82q8YNh
+# EviVbfgdvSPX5wmFAraDfwPUn74IUTz/tSlx2myrOwXpqaSSW2XtVGKDGdrPWIN8
+# wmpEftOqi+yQqRaVxnxKETvtoDL3XbK4x5wPxNGnlaRfXKzMgNZxt7+80BOXeTRA
+# GJutoN1x4mlXDo/QmQMSONlEmGCxbW38gDpWZZUCt9mjvl0C6qiGRTxF9HdEgC9c
+# I8TU8eyWhD37m0jJE+OHva1yfW7xOecYaEBCd8AaeZcCEMtaM/YzFiamoYIDTDCC
 # A0gGCSqGSIb3DQEJBjGCAzkwggM1AgEBMIGSMH0xCzAJBgNVBAYTAkdCMRswGQYD
 # VQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGDAWBgNV
 # BAoTD1NlY3RpZ28gTGltaXRlZDElMCMGA1UEAxMcU2VjdGlnbyBSU0EgVGltZSBT
 # dGFtcGluZyBDQQIRAJA5f5rSSjoT8r2RXwg4qUMwDQYJYIZIAWUDBAICBQCgeTAY
-# BgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzA0MjAx
-# OTQzMjJaMD8GCSqGSIb3DQEJBDEyBDAaUjnrVuuzmuB0U/2v1axsqVV5Hbt/XJlG
-# oyLUfIV5JRYMS6OAn1AFWRIukvzzF9EwDQYJKoZIhvcNAQEBBQAEggIANcrtiGJK
-# REo7ZHbzeW8KSBhwR5NbPNvb6gl8CKcNJ84mKJWA34sGQy7X+V4AV1MIdxO3p7kL
-# z/U85bpuvv6gdgWWy9RzIT5OZa1/t+UAmoiG+jlEHLuXrUYPnbzrjE1yuOwdaXCB
-# JJ3+bWiZhBjV0aNFPzdRE6Ed4/E4IieVGNNSiMhwbM2Fp2jIS16m0SJhZ7X9RJ85
-# lZhSE5uQKmYGuuifYdrJBBOsBPdWBVG49otjrkE3AoLQkoVnYjdMc0vt4si6jU5O
-# Uf8QUP2Age8owjHKu5KjEYIR41k3FBQ8R1bJSpfwMqATeSIvZYTGJOt0oBFQzr27
-# fR4TU/bHskP3IbefTcSO3N2muDp/IfxeFDEKThFxuDpguUBFEprdVWP56VaLIMq0
-# 0mP6PPawQITl7rqKrXBV1AuPkt7voWl+eXJ9u6O3i+9odUYgxkYj+/azSK0Qgi4K
-# dV5zLri3UQaqZ5EpTj458TksvrftjbB6/uAJ8/AeaaaK1HuI78o8Ji99V/LYvvf7
-# OM/B77Rz0CT0AEsz1FTXWw9pcmOsrlcvcsODY5U0o3/rlGwlwYcYvJ4O0djOnH3Z
-# vjkExzzntUMU6iMmYJosgbK/3kVstNEoBEMQv/Rl0xbRqIA3JVpbahC39PV+OtrX
-# SLbv0wRTkFq/zzb+uR4NHqnMonB5orqoP7Q=
+# BgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMzA0MjAy
+# MDIwMTJaMD8GCSqGSIb3DQEJBDEyBDDz7+Ik+mTrAbQhfrh73QWcEGItWGlcn5RS
+# x0/qimNNb95wFMiWtOvxqcR3dEMN6NYwDQYJKoZIhvcNAQEBBQAEggIAAP5Qj4WE
+# O+Yos1GLu3yooQXZXKIhEC++XsqbI22DbIF8PPJL3WfJNi3AhRF/1VtMJOz6hLKB
+# 8XZ82eDFfLmQEIA/NG3tCIRtBzwIwBhPiJvo6IwywJiTI3DqS2QFR+DwvMCG8O9W
+# Wy4cNWgTjs0G/0DvX8u3gnuRcOoTi8CYFT1L0C86uS2abScMBInpa+VKbChON4BU
+# acjmQxFQyf3L4fTgOpWCfFu+tsalv+voYO2XMxMnBkAtybO6U2rkpQs413h96fEx
+# FxYsEMpAn/Sjvns3v1AwQi3das+PYlDokiUk8Hy9UI2ee70s0Xb1hyMNy/NhFhEj
+# n3QuktbcOHXB0S3cNX+q4FFHGr+wFK+KrpAi+mV7tjbq4EFGpSI4zfRGUBXLV6oD
+# ESNQtPytXzr4HfMH/OeXka58QRjhequSeKa3SQwpQsfBre6vONJ6XyrMr/pxgebw
+# KP2ttJ1SsEW5vwL9NrB7ccmB4UgBivaAUahm4kEMh2RE+zeRW0qftqJ4olUxWfel
+# sm2IjUW0cMPhur9bxf/jyq7yLn99nOA36AadFr3hKh/QLDt/pU0EQ5Rqzda6t6R8
+# kweMquiwK8zMeFD0B+CW3o/Z0ZSJa4H7ulF1aEEepJt9N3QFI2AvGOW8lcWbvmvL
+# V9q3gbPWd4JIuw78bL4RNa/nOQIG7L12hQM=
 # SIG # End signature block
